@@ -6,8 +6,6 @@
 - gh login passed
 - SSH workflow passed
 - Repo push passed
-
-## In Progress
 - Cursor formal takeover of repo
 
 ## Next
@@ -18,3 +16,4 @@
 
 ## Test
 - repo push re-verified on 2026-03-12
+- cursor 修改文件，测试效果
