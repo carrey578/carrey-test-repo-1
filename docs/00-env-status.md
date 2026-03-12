@@ -15,3 +15,6 @@
 - Tencent Cloud server baseline
 - Codex CLI later
 - Openclaw Agent later
+
+## Test
+- repo push re-verified on 2026-03-12

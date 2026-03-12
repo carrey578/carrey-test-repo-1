@@ -10,3 +10,6 @@
 - Make Cursor the formal editor for this repo
 - Keep local workflow lightweight
 - Use GitHub through SSH
+
+## Test
+- repo push re-verified on 2026-03-12
