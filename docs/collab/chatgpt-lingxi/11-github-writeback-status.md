@@ -1,10 +1,10 @@
-# GitHub 文档回写状态
+# 11-github-writeback-status
 
-- GitHub 文档回写能力已启用
-- 回写执行端：灵犀
+- GitHub 文档回写能力：已启用
+- 回写执行端：灵犀 (OpenClaw Agent)
 - 仓库：carrey578/carrey-test-repo-1
 - 当前分支：chore/cursor-bootstrap
-- 仅允许文档类文件回写
-- 不允许推送到 main
-- 不删除原有只读 Deploy Key
-- 当前仍属于第3.5步增强收尾
+- 权限：仅允许文档类文件 (.md) 回写
+- 限制：不允许推送到 main 分支
+- 原只读 Deploy Key：保留不删除
+- 当前阶段：第3.5步增强收尾
