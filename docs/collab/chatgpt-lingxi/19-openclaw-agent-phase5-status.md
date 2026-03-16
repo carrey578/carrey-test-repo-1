@@ -18,7 +18,7 @@
 - GitHub 写回链路：已通过
 - OpenClaw 现有运行未受影响
 - 第 5 优先级当前状态：第一轮验证通过
-- 第 5.1 步补充验证：建议后续补一次“标准 Agent 只读 turn”
+- 第 5.1 步补充验证：标准 Agent 只读 turn 已通过
 
 ---
 
@@ -131,14 +131,15 @@ OpenClaw Agent 已成功在当前共享目录中完成一次受控 markdown 文�
 - Git push 验证通过
 - OpenClaw 运行稳定性验证通过
 
-### 当前保留项
-建议补一项“标准 Agent 只读 turn”验证：
+### 当前补充结果：标准 Agent 只读 turn 已验证通过
 
-- 读取共享目录中的总状态文档
-- 输出阶段总结
-- 不修改任何文件
+- 读取了 docs/collab/chatgpt-lingxi/17-current-overall-status-through-phase4.md
+- Agent 已返回阶段总结（第1-4优先级已完成，第5优先级未开启）
+- 本次验证未修改任何文件
+- 执行前后 git status 保持 clean
+- OpenClaw 服务仍正常
 
-该项不是 blocker，不影响当前“第一轮验证通过”的结论，但补上后会让第 5 步更完整。
+该项不是 blocker，不影响当前"第一轮验证通过"的结论，但补上后会让第 5 步更完整。
 
 ---
 
@@ -156,12 +157,15 @@ OpenClaw Agent 已成功在当前共享目录中完成一次受控 markdown 文�
 - 可对当前项目做受控任务
 - 可在共享目录中新增 markdown 文档
 
-### 3. 协作链路能力
+### 3. Agent 只读能力
+- OpenClaw Agent 可在当前项目中执行标准只读 turn
+- 可读取共享目录文档并返回阶段总结
+- 执行后 git status 保持 clean
 当前已打通以下链路：
 
-OpenClaw Agent  
-→ `docs/collab/chatgpt-lingxi/`  
-→ Git 提交  
+OpenClaw Agent
+→ `docs/collab/chatgpt-lingxi/`
+→ Git 提交
 → GitHub `chore/cursor-bootstrap` 分支
 
 ---
@@ -251,4 +255,4 @@ OpenClaw Agent
 - 当前继续使用 `chore/cursor-bootstrap` 作为协作分支
 - skill 文件继续作为 Agent 工作边界主入口
 - 不提前扩大到系统配置修改或大规模代码自动化
-- 后续补一次标准 Agent 只读 turn，再决定是否扩大任务范围
+- 标准 Agent 只读 turn 已补齐，后续如需扩大范围，仍应优先从文档类任务逐步放开
