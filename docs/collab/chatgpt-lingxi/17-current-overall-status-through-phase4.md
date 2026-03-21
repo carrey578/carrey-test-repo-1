@@ -1,3 +1,8 @@
+﻿> 状态：历史参考文档  
+> 当前有效口径请优先参考：
+> - 19-openclaw-agent-phase5-status.md
+> - 21-env-plan-2.0-brief.md
+> - 22-shared-docs-status-index.md
 # 17-截至第4优先级的总状态总览
 
 > 更新时间：2026-03-15
@@ -39,3 +44,4 @@
 ## 后续待处理
 
 - 第5优先级：待确认开启时机
+

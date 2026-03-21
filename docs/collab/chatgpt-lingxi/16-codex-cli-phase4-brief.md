@@ -1,4 +1,9 @@
-﻿# 16-codex-cli-phase4-brief
+﻿> 状态：历史参考文档  
+> 当前有效口径请优先参考：
+> - 19-openclaw-agent-phase5-status.md
+> - 21-env-plan-2.0-brief.md
+> - 22-shared-docs-status-index.md
+# 16-codex-cli-phase4-brief
 
 ## 当前状态
 - 第4优先级：已完成第一轮基础接入与验收
@@ -44,3 +49,4 @@
 
 ## 一句话总结
 第4优先级已完成第一轮基础接入：Codex CLI 已在本地和服务器真实 repo 中验证通过，且未影响现有 OpenClaw 运行。
+

@@ -1,3 +1,8 @@
+﻿> 状态：历史参考文档  
+> 当前有效口径请优先参考：
+> - 19-openclaw-agent-phase5-status.md
+> - 21-env-plan-2.0-brief.md
+> - 22-shared-docs-status-index.md
 # 12-current-overall-status
 
 ## 文档目的
@@ -281,3 +286,4 @@ ChatGPT 已具备围绕当前 repo 的持续上下文，可用于：
 - 临时导出优先放 `/home/ubuntu/xfer/outgoing`
 - 服务器执行结果优先沉淀为 markdown
 - 当前阶段只做收尾、记录、整理，不扩展到新优先级
+

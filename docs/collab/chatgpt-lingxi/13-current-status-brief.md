@@ -1,3 +1,8 @@
+﻿> 状态：历史参考文档  
+> 当前有效口径请优先参考：
+> - 19-openclaw-agent-phase5-status.md
+> - 21-env-plan-2.0-brief.md
+> - 22-shared-docs-status-index.md
 # 13-current-status-brief
 
 ## 当前阶段
@@ -55,3 +60,4 @@
 - 文件命名优先使用：
   - `YYYY-MM-DD-主题-说明.md`
 - 当前阶段只做记录、同步、整理，不扩展到第4优先级
+

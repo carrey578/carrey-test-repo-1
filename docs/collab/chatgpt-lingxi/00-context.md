@@ -1,4 +1,9 @@
-﻿# 00-context
+﻿> 状态：历史参考文档  
+> 当前有效口径请优先参考：
+> - 19-openclaw-agent-phase5-status.md
+> - 21-env-plan-2.0-brief.md
+> - 22-shared-docs-status-index.md
+# 00-context
 
 ## 本地
 - 活跃 repo：D:\dev\carrey-test-repo-1
@@ -14,3 +19,4 @@
 ## GitHub
 - 仓库：carrey578/carrey-test-repo-1
 - 服务器访问方式：Deploy Key（只读）
+
