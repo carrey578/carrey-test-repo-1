@@ -1,0 +1,50 @@
+{
+  "name": "carrey-test-repo-1",
+  "version": "1.0.0",
+  "description": "开发环境配置模板",
+  "_comment": "本文件为配置模板，不要写入真实敏感值",
+
+  "repository": {
+    "type": "git",
+    "url": "git@github-carrey-test:carrey578/carrey-test-repo-1.git",
+    "branch": "chore/cursor-bootstrap"
+  },
+
+  "paths": {
+    "docs": "docs/",
+    "scripts": "scripts/",
+    "tools": "tools/",
+    "sharedForAi": "shared-for-ai/",
+    "_comment": "路径配置，根据仓库结构调整"
+  },
+
+  "openclaw": {
+    "enabled": true,
+    "gatewayUrl": "http://localhost:3000",
+    "_comment": "OpenClaw Gateway 配置，如无特殊需求保持默认"
+  },
+
+  "github": {
+    "deployKey": "~/.ssh/id_ed25519_carrey_test_repo",
+    "_comment": "Deploy Key 路径，根据实际部署调整"
+  },
+
+  "scripts": {
+    "preflight": "scripts/preflight-check.sh",
+    "devEntry": "scripts/dev-entry.sh",
+    "changeReport": "scripts/generate-change-report.sh",
+    "_comment": "常用脚本入口"
+  },
+
+  "checks": {
+    "requireBranch": "chore/cursor-bootstrap",
+    "allowMainCommit": false,
+    "_comment": "预提交检查配置"
+  },
+
+  "metadata": {
+    "templateVersion": "1.0.0",
+    "createdAt": "2026-03-25",
+    "_comment": "模板元信息，不要修改"
+  }
+}

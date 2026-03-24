@@ -1,0 +1,66 @@
+# 任务配置模板
+# 使用方法：复制本文件为 task-config.json 并填入任务信息
+
+{
+  "task": {
+    "id": "TASK-XXX",
+    "name": "任务名称",
+    "description": "任务简要描述",
+    "status": "pending",
+    "_comment": "任务基本信息和状态"
+  },
+
+  "assignee": {
+    "name": "执行者名称",
+    "role": "灵犀 / 人类 / Codex",
+    "_comment": "任务负责人"
+  },
+
+  "timeline": {
+    "createdAt": "2026-03-25",
+    "dueDate": null,
+    "startedAt": null,
+    "completedAt": null,
+    "_comment": "时间线信息"
+  },
+
+  "scope": {
+    "allowedDirs": ["docs/", "scripts/", "tools/", "config/"],
+    "allowedActions": ["read", "write", "execute"],
+    "blockedActions": ["delete_main", "force_push"],
+    "_comment": "允许的操作范围"
+  },
+
+  "checkpoints": [
+    {
+      "name": "Plan 阶段",
+      "status": "pending",
+      "output": null,
+      "_comment": "任务规划检查点"
+    },
+    {
+      "name": "执行阶段",
+      "status": "pending",
+      "output": null,
+      "_comment": "任务执行检查点"
+    },
+    {
+      "name": "Review 阶段",
+      "status": "pending",
+      "output": null,
+      "_comment": "任务审查检查点"
+    }
+  ],
+
+  "handoff": {
+    "requireReview": true,
+    "reviewer": null,
+    "notes": null,
+    "_comment": "交接信息"
+  },
+
+  "metadata": {
+    "templateVersion": "1.0.0",
+    "_comment": "模板版本，不要修改"
+  }
+}
