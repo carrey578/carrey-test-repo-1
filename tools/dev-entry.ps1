@@ -1,5 +1,10 @@
 # dev-entry.ps1 - 统一任务入口脚本（Windows 端）
-# 用法: .\dev-entry.ps1 [command]
+# 用法: .\dev-entry.ps1 [-Verbose] [-Quiet] [command]
+
+param(
+    [switch]$Verbose,
+    [switch]$Quiet
+)
 
 $ErrorActionPreference = "Continue"
 
@@ -18,8 +23,26 @@ function Write-Color($color, $message) {
     }
 }
 
+# 消息函数（支持 verbose/quiet 模式）
+function Log-Info($message) {
+    if (-not $Quiet) { Write-Host $message }
+}
+function Log-Verbose($message) {
+    if ($Verbose -and -not $Quiet) { Write-Host "⚡ $message" -ForegroundColor Yellow }
+}
+function Log-Success($message) {
+    if (-not $Quiet) { Write-Host "✓ $message" -ForegroundColor Green }
+}
+function Log-Error($message) {
+    Write-Host "✗ $message" -ForegroundColor Red
+}
+
 function Show-Help {
     Write-Color "Blue" "=== 开发任务统一入口 ==="
+    Write-Host ""
+    Write-Color "Green" "全局选项:"
+    Write-Host "  -Verbose    详细输出模式"
+    Write-Host "  -Quiet      安静模式（只输出关键信息）"
     Write-Host ""
     Write-Color "Green" "可用命令:"
     Write-Host "  check      - 运行开发环境检查"
@@ -33,22 +56,22 @@ function Show-Help {
     Write-Host "  help       - 显示帮助"
     Write-Host ""
     Write-Color "Yellow" "示例:"
-    Write-Host "  .\dev-entry.ps1 check      # 运行开发环境检查"
-    Write-Host "  .\dev-entry.ps1 status     # 查看仓库状态"
-    Write-Host "  .\dev-entry.ps1 docs       # 查看文档索引"
-    Write-Host "  .\dev-entry.ps1 handoff   # 生成 handoff"
-    Write-Host "  .\dev-entry.ps1 reports    # 检查报告目录"
-    Write-Host "  .\dev-entry.ps1 all        # 运行所有检查"
-    Write-Host "  .\dev-entry.ps1 preflight  # 运行预提交检查"
-    Write-Host "  .\dev-entry.ps1 report     # 生成变更报告"
+    Write-Host "  .\dev-entry.ps1 check                # 运行开发环境检查"
+    Write-Host "  .\dev-entry.ps1 status               # 查看仓库状态"
+    Write-Host "  .\dev-entry.ps1 -Verbose all         # 详细模式运行所有检查"
+    Write-Host "  .\dev-entry.ps1 -Quiet check         # 安静模式运行检查"
+    Write-Host "  .\dev-entry.ps1 -Verbose report      # 详细模式生成报告"
 }
 
 function Cmd-Check {
+    Log-Verbose "执行开发环境检查..."
     Write-Color "Blue" "=== 运行开发环境检查 ==="
     & "$ScriptDir\check-dev-env-local.ps1"
+    Log-Success "开发环境检查完成"
 }
 
 function Cmd-Status {
+    Log-Verbose "获取仓库状态..."
     Write-Color "Blue" "=== 仓库状态摘要 ==="
     Write-Host ""
     
@@ -81,6 +104,7 @@ function Cmd-Status {
 }
 
 function Cmd-Docs {
+    Log-Verbose "查看文档索引..."
     Write-Color "Blue" "=== 文档索引 ==="
     Write-Host ""
     Write-Host "主要目录结构:"
@@ -105,6 +129,7 @@ function Cmd-Docs {
 }
 
 function Cmd-Handoff {
+    Log-Verbose "生成 handoff 入口..."
     Write-Color "Blue" "=== Handoff 生成入口 ==="
     Write-Host ""
     Write-Host "当前可用 handoff 模板:"
@@ -123,6 +148,7 @@ function Cmd-Handoff {
 }
 
 function Cmd-Reports {
+    Log-Verbose "检查报告目录..."
     Write-Color "Blue" "=== 报告目录检查 ==="
     Write-Host ""
     Write-Host "报告目录结构:"
@@ -151,28 +177,33 @@ function Cmd-Reports {
 }
 
 function Cmd-All {
+    Log-Verbose "运行所有检查..."
     Write-Color "Blue" "=== 运行所有检查 ==="
     Write-Host ""
-    Write-Host "步骤 1/3: 开发环境检查" -ForegroundColor Yellow
+    if (-not $Quiet) { Write-Host "步骤 1/3: 开发环境检查" -ForegroundColor Yellow }
     & "$ScriptDir\check-dev-env-local.ps1"
     Write-Host ""
-    Write-Host "步骤 2/3: 预提交检查" -ForegroundColor Yellow
+    if (-not $Quiet) { Write-Host "步骤 2/3: 预提交检查" -ForegroundColor Yellow }
     & "$ScriptDir\preflight-check.ps1"
     Write-Host ""
-    Write-Host "步骤 3/3: 仓库状态" -ForegroundColor Yellow
+    if (-not $Quiet) { Write-Host "步骤 3/3: 仓库状态" -ForegroundColor Yellow }
     Cmd-Status
     Write-Host ""
-    Write-Color "Green" "=== 所有检查完成 ==="
+    Log-Success "所有检查完成"
 }
 
 function Cmd-Preflight {
+    Log-Verbose "运行预提交检查..."
     Write-Color "Blue" "=== 运行预提交检查 ==="
     & "$ScriptDir\preflight-check.ps1"
+    Log-Success "预提交检查完成"
 }
 
 function Cmd-Report {
+    Log-Verbose "生成变更报告..."
     Write-Color "Blue" "=== 生成变更报告 ==="
     & "$ScriptDir\generate-change-report.ps1"
+    Log-Success "变更报告生成完成"
 }
 
 # 主逻辑
