@@ -22,17 +22,25 @@ function Show-Help {
     Write-Color "Blue" "=== 开发任务统一入口 ==="
     Write-Host ""
     Write-Color "Green" "可用命令:"
-    Write-Host "  check    - 运行开发环境检查"
-    Write-Host "  status   - 显示仓库状态摘要"
-    Write-Host "  docs     - 查看文档索引"
-    Write-Host "  handoff  - 生成 handoff 入口"
-    Write-Host "  reports  - 检查报告目录"
-    Write-Host "  help     - 显示帮助"
+    Write-Host "  check      - 运行开发环境检查"
+    Write-Host "  status     - 显示仓库状态摘要"
+    Write-Host "  docs       - 查看文档索引"
+    Write-Host "  handoff    - 生成 handoff 入口"
+    Write-Host "  reports    - 检查报告目录"
+    Write-Host "  all        - 运行所有检查 (check+preflight+status)"
+    Write-Host "  preflight  - 运行预提交检查"
+    Write-Host "  report     - 生成变更报告"
+    Write-Host "  help       - 显示帮助"
     Write-Host ""
     Write-Color "Yellow" "示例:"
-    Write-Host "  .\dev-entry.ps1 check    # 运行开发环境检查"
-    Write-Host "  .\dev-entry.ps1 status   # 查看仓库状态"
-    Write-Host "  .\dev-entry.ps1 docs    # 查看文档索引"
+    Write-Host "  .\dev-entry.ps1 check      # 运行开发环境检查"
+    Write-Host "  .\dev-entry.ps1 status     # 查看仓库状态"
+    Write-Host "  .\dev-entry.ps1 docs       # 查看文档索引"
+    Write-Host "  .\dev-entry.ps1 handoff   # 生成 handoff"
+    Write-Host "  .\dev-entry.ps1 reports    # 检查报告目录"
+    Write-Host "  .\dev-entry.ps1 all        # 运行所有检查"
+    Write-Host "  .\dev-entry.ps1 preflight  # 运行预提交检查"
+    Write-Host "  .\dev-entry.ps1 report     # 生成变更报告"
 }
 
 function Cmd-Check {
@@ -142,15 +150,43 @@ function Cmd-Reports {
         ForEach-Object { Write-Host "  - $($_.Name)" }
 }
 
+function Cmd-All {
+    Write-Color "Blue" "=== 运行所有检查 ==="
+    Write-Host ""
+    Write-Host "步骤 1/3: 开发环境检查" -ForegroundColor Yellow
+    & "$ScriptDir\check-dev-env-local.ps1"
+    Write-Host ""
+    Write-Host "步骤 2/3: 预提交检查" -ForegroundColor Yellow
+    & "$ScriptDir\preflight-check.ps1"
+    Write-Host ""
+    Write-Host "步骤 3/3: 仓库状态" -ForegroundColor Yellow
+    Cmd-Status
+    Write-Host ""
+    Write-Color "Green" "=== 所有检查完成 ==="
+}
+
+function Cmd-Preflight {
+    Write-Color "Blue" "=== 运行预提交检查 ==="
+    & "$ScriptDir\preflight-check.ps1"
+}
+
+function Cmd-Report {
+    Write-Color "Blue" "=== 生成变更报告 ==="
+    & "$ScriptDir\generate-change-report.ps1"
+}
+
 # 主逻辑
 $cmd = $args[0]
 switch ($cmd) {
-    "check"    { Cmd-Check }
-    "status"   { Cmd-Status }
-    "docs"     { Cmd-Docs }
-    "handoff"  { Cmd-Handoff }
-    "reports"  { Cmd-Reports }
-    "help"     { Show-Help }
-    "?"        { Show-Help }
-    default    { Show-Help }
+    "check"      { Cmd-Check }
+    "status"     { Cmd-Status }
+    "docs"       { Cmd-Docs }
+    "handoff"    { Cmd-Handoff }
+    "reports"    { Cmd-Reports }
+    "all"        { Cmd-All }
+    "preflight"  { Cmd-Preflight }
+    "report"     { Cmd-Report }
+    "help"       { Show-Help }
+    "?"          { Show-Help }
+    default      { Show-Help }
 }

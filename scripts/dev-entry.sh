@@ -21,6 +21,9 @@ COMMANDS=(
     "docs:查看文档索引"
     "handoff:生成handoff入口"
     "reports:检查报告目录"
+    "all:运行所有检查（check+preflight+status）"
+    "preflight:运行预提交检查"
+    "report:生成变更报告"
     "help:显示帮助"
 )
 
@@ -36,11 +39,14 @@ show_help() {
     done
     echo ""
     echo -e "${YELLOW}示例:${NC}"
-    echo "  bash dev-entry.sh check    # 运行开发环境检查"
-    echo "  bash dev-entry.sh status   # 查看仓库状态"
-    echo "  bash dev-entry.sh docs     # 查看文档索引"
-    echo "  bash dev-entry.sh handoff  # 生成 handoff"
-    echo "  bash dev-entry.sh reports  # 检查报告目录"
+    echo "  bash dev-entry.sh check      # 运行开发环境检查"
+    echo "  bash dev-entry.sh status     # 查看仓库状态"
+    echo "  bash dev-entry.sh docs       # 查看文档索引"
+    echo "  bash dev-entry.sh handoff   # 生成 handoff"
+    echo "  bash dev-entry.sh reports    # 检查报告目录"
+    echo "  bash dev-entry.sh all        # 运行所有检查"
+    echo "  bash dev-entry.sh preflight  # 运行预提交检查"
+    echo "  bash dev-entry.sh report     # 生成变更报告"
 }
 
 cmd_check() {
@@ -111,6 +117,31 @@ cmd_reports() {
     done
 }
 
+cmd_all() {
+    echo -e "${BLUE}=== 运行所有检查 ===${NC}"
+    echo ""
+    echo "步骤 1/3: 开发环境检查"
+    bash scripts/check-dev-env-server.sh
+    echo ""
+    echo "步骤 2/3: 预提交检查"
+    bash scripts/preflight-check.sh
+    echo ""
+    echo "步骤 3/3: 仓库状态"
+    bash scripts/dev-entry.sh status
+    echo ""
+    echo -e "${GREEN}=== 所有检查完成 ===${NC}"
+}
+
+cmd_preflight() {
+    echo -e "${BLUE}=== 运行预提交检查 ===${NC}"
+    bash scripts/preflight-check.sh
+}
+
+cmd_report() {
+    echo -e "${BLUE}=== 生成变更报告 ===${NC}"
+    bash scripts/generate-change-report.sh
+}
+
 # 主逻辑
 case "${1:-help}" in
     check)     cmd_check ;;
@@ -118,6 +149,9 @@ case "${1:-help}" in
     docs)      cmd_docs ;;
     handoff)   cmd_handoff ;;
     reports)   cmd_reports ;;
+    all)       cmd_all ;;
+    preflight) cmd_preflight ;;
+    report)    cmd_report ;;
     help|--help|-h) show_help ;;
     *)         echo -e "${RED}未知命令: $1${NC}"; show_help; exit 1 ;;
 esac
