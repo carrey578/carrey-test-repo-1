@@ -8,6 +8,7 @@
 
 | 脚本 | 用途 | 核心功能 |
 |------|------|----------|
+| `lib-common.sh` | 公共函数库 | 颜色定义、消息函数、工具函数（供其他脚本引用） |
 | `check-dev-env-server.sh` | 开发环境检查 | 检查仓库、分支、OpenClaw、内存、磁盘、Node、Git 状态 |
 | `dev-entry.sh` | 统一任务入口 | 整合 check/status/docs/handoff/reports 命令 |
 | `preflight-check.sh` | 预提交检查 | Git 仓库、分支、工作区、目录结构、脚本语法检查 |
@@ -55,6 +56,7 @@ bash scripts/dev-entry.sh status
 - bash
 - git
 - 标准 Unix 工具 (grep, awk, sed, free, df, ps)
+- lib-common.sh (公共函数库，由 dev-entry.sh 引入)
 
 ---
 

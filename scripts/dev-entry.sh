@@ -2,15 +2,13 @@
 # dev-entry.sh - 统一任务入口脚本（Linux/服务器端）
 # 用法: bash dev-entry.sh [options] [command]
 
-REPO_ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
+# 引入公共函数库
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+REPO_ROOT="$(cd "$SCRIPT_DIR/.." && pwd)"
 cd "$REPO_ROOT"
 
-# 颜色定义
-RED='\033[0;31m'
-GREEN='\033[0;32m'
-YELLOW='\033[1;33m'
-BLUE='\033[0;34m'
-NC='\033[0m'
+# 引入公共库
+source "$SCRIPT_DIR/lib-common.sh"
 
 # 默认参数
 VERBOSE=false
