@@ -56,5 +56,50 @@ if ($LASTEXITCODE -eq 0) {
     Write-Host " Git unavailable" -ForegroundColor Red
 }
 
+# 6. Check Node.js (optional)
+Write-Host "[6] Check Node.js..." -NoNewline
+try {
+    $nodeVersion = & node --version 2>$null
+    if ($nodeVersion) {
+        Write-Host " $nodeVersion" -ForegroundColor Green
+    } else {
+        Write-Host " Not found" -ForegroundColor Yellow
+    }
+} catch {
+    Write-Host " Not found" -ForegroundColor Yellow
+}
+
+# 7. Check npm (optional)
+Write-Host "[7] Check npm..." -NoNewline
+try {
+    $npmVersion = & npm --version 2>$null
+    if ($npmVersion) {
+        Write-Host " $npmVersion" -ForegroundColor Green
+    } else {
+        Write-Host " Not found" -ForegroundColor Yellow
+    }
+} catch {
+    Write-Host " Not found" -ForegroundColor Yellow
+}
+
+# 8. Check Cursor (optional)
+Write-Host "[8] Check Cursor..." -NoNewline
+$cursorPath = @(
+    "$env:APPDATA\Cursor\User\globalStorage",
+    "$env:LOCALAPPDATA\Cursor\User\globalStorage"
+)
+$cursorFound = $false
+foreach ($path in $cursorPath) {
+    if (Test-Path $path) {
+        $cursorFound = $true
+        break
+    }
+}
+if ($cursorFound) {
+    Write-Host " Installed" -ForegroundColor Green
+} else {
+    Write-Host " Not found" -ForegroundColor Yellow
+}
+
 Write-Host ""
 Write-Host "=== Check Complete ===" -ForegroundColor Cyan

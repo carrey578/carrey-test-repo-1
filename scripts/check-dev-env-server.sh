@@ -57,5 +57,46 @@ else
     echo "  ⚠ OpenClaw Gateway 未运行"
 fi
 
+# 7. 检查内存使用
+echo "[7] 检查内存使用..."
+mem_used=$(free -m | awk '/Mem:/ {print $3}')
+mem_total=$(free -m | awk '/Mem:/ {print $2}')
+if [ -n "$mem_used" ] && [ -n "$mem_total" ]; then
+    mem_percent=$((mem_used * 100 / mem_total))
+    echo "  ✓ 内存使用: ${mem_used}MB / ${mem_total}MB (${mem_percent}%)"
+fi
+
+# 8. 检查磁盘使用
+echo "[8] 检查磁盘使用..."
+disk_used=$(df -h / | awk 'NR==2 {print $3}')
+disk_total=$(df -h / | awk 'NR==2 {print $2}')
+disk_percent=$(df -h / | awk 'NR==2 {print $5}')
+if [ -n "$disk_used" ]; then
+    echo "  ✓ 磁盘使用: ${disk_used} / ${disk_total} (${disk_percent})"
+fi
+
+# 9. 检查 Node 版本
+echo "[9] 检查 Node 版本..."
+if command -v node &> /dev/null; then
+    node_version=$(node --version)
+    echo "  ✓ Node: $node_version"
+else
+    echo "  ✗ Node 未安装"
+fi
+
+# 10. 检查 Git 状态
+echo "[10] 检查 Git 状态..."
+cd /root/workspace/repos/carrey-test-repo-1 2>/dev/null
+if git rev-parse --git-dir > /dev/null 2>&1; then
+    status=$(git status --porcelain)
+    if [ -z "$status" ]; then
+        echo "  ✓ 工作区干净"
+    else
+        echo "  ⚠ 有未提交的更改"
+    fi
+    remote=$(git remote get-url origin 2>/dev/null)
+    echo "  ✓ 远程: $remote"
+fi
+
 echo ""
 echo "=== 检查完成 ==="
