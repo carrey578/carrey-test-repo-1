@@ -1,60 +1,60 @@
-# check-dev-env-local.ps1
-# 本地开发环境检查脚本
-# 适用：Windows PowerShell
+﻿# check-dev-env-local.ps1
+# Local development environment check script
+# For: Windows PowerShell
 
 $ErrorActionPreference = "Continue"
 
-Write-Host "=== 本地开发环境检查 ===" -ForegroundColor Cyan
+Write-Host "=== Local Development Environment Check ===" -ForegroundColor Cyan
 Write-Host ""
 
-# 1. 检查分支
-Write-Host "[1] 检查 Git 分支..." -NoNewline
+# 1. Check Git branch
+Write-Host "[1] Check Git branch..." -NoNewline
 $branch = git branch --show-current 2>$null
 if ($branch -eq "chore/cursor-bootstrap") {
     Write-Host " OK" -ForegroundColor Green
 } elseif ($branch) {
-    Write-Host " 当前在: $branch (建议切换到 chore/cursor-bootstrap)" -ForegroundColor Yellow
+    Write-Host " Current: $branch (recommend: chore/cursor-bootstrap)" -ForegroundColor Yellow
 } else {
-    Write-Host " 不是 Git 仓库" -ForegroundColor Red
+    Write-Host " Not a Git repository" -ForegroundColor Red
 }
 
-# 2. 检查 README
-Write-Host "[2] 检查 README 文件..." -NoNewline
+# 2. Check README files
+Write-Host "[2] Check README files..." -NoNewline
 $readmeFiles = Get-ChildItem -Path . -Filter "README*" -File -ErrorAction SilentlyContinue
 if ($readmeFiles) {
-    Write-Host " OK ($($readmeFiles.Count) 个文件)" -ForegroundColor Green
+    Write-Host " OK ($($readmeFiles.Count) file(s))" -ForegroundColor Green
 } else {
-    Write-Host " 未找到 README 文件" -ForegroundColor Red
+    Write-Host " No README found" -ForegroundColor Red
 }
 
-# 3. 检查 docs 目录
-Write-Host "[3] 检查 docs 目录..." -NoNewline
+# 3. Check docs directory
+Write-Host "[3] Check docs directory..." -NoNewline
 if (Test-Path "docs") {
     Write-Host " OK" -ForegroundColor Green
 } else {
-    Write-Host " 不存在 docs 目录" -ForegroundColor Red
+    Write-Host " docs directory not found" -ForegroundColor Red
 }
 
-# 4. 检查共享目录
-Write-Host "[4] 检查共享目录..." -NoNewline
+# 4. Check shared directory
+Write-Host "[4] Check shared directory..." -NoNewline
 if (Test-Path "docs/collab/chatgpt-lingxi") {
     Write-Host " OK" -ForegroundColor Green
 } else {
-    Write-Host " 不存在共享目录" -ForegroundColor Red
+    Write-Host " shared directory not found" -ForegroundColor Red
 }
 
-# 5. 检查 Git 状态
-Write-Host "[5] 检查 Git 状态..." -NoNewline
+# 5. Check Git status
+Write-Host "[5] Check Git status..." -NoNewline
 $status = git status --porcelain 2>$null
 if ($LASTEXITCODE -eq 0) {
     if ($status) {
-        Write-Host " 有未提交更改" -ForegroundColor Yellow
+        Write-Host " Uncommitted changes" -ForegroundColor Yellow
     } else {
-        Write-Host " 工作区干净" -ForegroundColor Green
+        Write-Host " Working tree clean" -ForegroundColor Green
     }
 } else {
-    Write-Host " Git 不可用" -ForegroundColor Red
+    Write-Host " Git unavailable" -ForegroundColor Red
 }
 
 Write-Host ""
-Write-Host "=== 检查完成 ===" -ForegroundColor Cyan
+Write-Host "=== Check Complete ===" -ForegroundColor Cyan
