@@ -71,3 +71,18 @@
 - 运行时 active 配置：`/root/workspace/runtime/model-routing/active-provider.env`
 - 授权状态文件：`/root/workspace/runtime/model-routing/external-model-approval.status`
 - 模型切换指南：`137-model-switching-guide.md`
+
+---
+
+## 📝 本次使用记录（2026-04-01）
+
+| 字段 | 值 |
+|------|-----|
+| 本次任务名 | Claude 最小接入只读试运行 |
+| 使用的外部模型 | Claude |
+| 使用原因 | 需要对当前仓做一次深度只读分析，默认 Coding Plan 模型不适合做这轮长上下文读仓 |
+| 开始时间 | 2026-04-01T12:00:00+08:00 |
+| 结束时间 | 2026-04-01T12:22:00+08:00 |
+| 是否已恢复默认 Coding Plan 路由 | 是 |
+| 是否仍有待继续的后续任务 | 否 |
+| 备注 | 完成了 139-claude-access-status.md 补全，无代码改动 |
