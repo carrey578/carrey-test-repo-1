@@ -1,4 +1,4 @@
-# dev-entry.ps1 - 统一任务入口脚本（Windows 端）
+﻿# dev-entry.ps1 - 统一任务入口脚本（Windows 端）
 # 用法: .\dev-entry.ps1 [-Verbose] [-Quiet] [command]
 
 param(
@@ -28,13 +28,13 @@ function Log-Info($message) {
     if (-not $Quiet) { Write-Host $message }
 }
 function Log-Verbose($message) {
-    if ($Verbose -and -not $Quiet) { Write-Host "⚡ $message" -ForegroundColor Yellow }
+    if ($Verbose -and -not $Quiet) { Write-Host "[verbose] $message" -ForegroundColor Yellow }
 }
 function Log-Success($message) {
-    if (-not $Quiet) { Write-Host "✓ $message" -ForegroundColor Green }
+    if (-not $Quiet) { Write-Host "[ok] $message" -ForegroundColor Green }
 }
 function Log-Error($message) {
-    Write-Host "✗ $message" -ForegroundColor Red
+    Write-Host "[error] $message" -ForegroundColor Red
 }
 
 function Show-Help {
@@ -154,7 +154,7 @@ function Cmd-Reports {
     Write-Host "报告目录结构:"
     
     $dirs = @(
-        "docs=collab\chatgpt-lingxi",
+        "docs\collab\chatgpt-lingxi",
         "shared-for-ai\outputs"
     )
     
@@ -180,13 +180,13 @@ function Cmd-All {
     Log-Verbose "运行所有检查..."
     Write-Color "Blue" "=== 运行所有检查 ==="
     Write-Host ""
-    if (-not $Quiet) { Write-Host "步骤 1/3: 开发环境检查" -ForegroundColor Yellow }
+    if (-not $Quiet) { Write-Host "Step 1/3: check dev environment" -ForegroundColor Yellow }
     & "$ScriptDir\check-dev-env-local.ps1"
     Write-Host ""
-    if (-not $Quiet) { Write-Host "步骤 2/3: 预提交检查" -ForegroundColor Yellow }
+    if (-not $Quiet) { Write-Host "Step 2/3: run preflight checks" -ForegroundColor Yellow }
     & "$ScriptDir\preflight-check.ps1"
     Write-Host ""
-    if (-not $Quiet) { Write-Host "步骤 3/3: 仓库状态" -ForegroundColor Yellow }
+    if (-not $Quiet) { Write-Host "Step 3/3: show repo status" -ForegroundColor Yellow }
     Cmd-Status
     Write-Host ""
     Log-Success "所有检查完成"
