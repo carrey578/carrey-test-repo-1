@@ -1,4 +1,4 @@
-# Repo Health Check 验证指南
+﻿# Repo Health Check 验证指南
 
 ## 概述
 

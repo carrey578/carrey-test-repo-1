@@ -1,5 +1,5 @@
-# preflight-check.ps1 - 预提交检查脚本 (Windows 端)
-# 用法: .\preflight-check.ps1 [-Strict]
+﻿# preflight-check.ps1 - preflight check script (Windows)
+# Usage: .\preflight-check.ps1 [-Strict]
 
 $ErrorActionPreference = "Continue"
 
@@ -7,86 +7,86 @@ $RepoRoot = Split-Path -Parent (Split-Path -Parent $MyInvocation.MyCommand.Path)
 
 function Write-Log($type, $message) {
     switch ($type) {
-        "Pass"  { Write-Host "✓ $message" -ForegroundColor Green }
-        "Fail"  { Write-Host "✗ $message" -ForegroundColor Red; $script:Errors++ }
-        "Warn"  { Write-Host "⚠ $message" -ForegroundColor Yellow; $script:Warnings++ }
-        "Info"   { Write-Host "ℹ $message" -ForegroundColor Cyan }
+        "Pass"  { Write-Host "[PASS] $message" -ForegroundColor Green }
+        "Fail"  { Write-Host "[FAIL] $message" -ForegroundColor Red; $script:Errors++ }
+        "Warn"  { Write-Host "[WARN] $message" -ForegroundColor Yellow; $script:Warnings++ }
+        "Info"  { Write-Host "[INFO] $message" -ForegroundColor Cyan }
     }
 }
 
 $Errors = 0
 $Warnings = 0
 
-Write-Host "=== 预提交检查 ===" -ForegroundColor Cyan
+Write-Host "=== Preflight Check ===" -ForegroundColor Cyan
 Write-Host ""
 
-# 1. 检查 Git 仓库
-Write-Log "Info" "1. 检查 Git 仓库..."
+# 1. Check Git repository
+Write-Log "Info" "1. Checking Git repository..."
 try {
     $gitCheck = git rev-parse --git-dir 2>$null
-    Write-Log "Pass" "Git 仓库正常"
+    Write-Log "Pass" "Git repository detected"
 } catch {
-    Write-Log "Fail" "不是 Git 仓库"
+    Write-Log "Fail" "Not a Git repository"
 }
 
-# 2. 检查分支
-Write-Log "Info" "2. 检查当前分支..."
+# 2. Check branch
+Write-Log "Info" "2. Checking current branch..."
 $branch = git branch --show-current 2>$null
 if ($branch -eq "chore/cursor-bootstrap") {
-    Write-Log "Pass" "当前分支: $branch"
+    Write-Log "Pass" "Current branch: $branch"
 } elseif ($branch -eq "main") {
     if ($Strict) {
-        Write-Log "Fail" "不应直接提交到 main"
+        Write-Log "Fail" "Do not commit directly to main"
     } else {
-        Write-Log "Warn" "当前在 main 分支，建议在 feature 分支开发"
+        Write-Log "Warn" "Currently on main; use a feature branch if possible"
     }
 } else {
-    Write-Log "Warn" "当前分支: $branch"
+    Write-Log "Warn" "Current branch: $branch"
 }
 
-# 3. 检查工作区状态
-Write-Log "Info" "3. 检查工作区状态..."
+# 3. Check working tree status
+Write-Log "Info" "3. Checking working tree status..."
 $status = git status --porcelain 2>$null
 if (-not $status) {
-    Write-Log "Info" "工作区干净"
+    Write-Log "Info" "Working tree is clean"
 } else {
     $untracked = ($status -split "`n" | Where-Object { $_ -match "^\?\?" }).Count
     $modified = ($status -split "`n" | Where-Object { $_ -match "^( M|M )" }).Count
-    Write-Log "Info" "未暂存: $untracked, 已修改: $modified"
+    Write-Log "Info" "Untracked: $untracked, Modified: $modified"
 }
 
-# 4. 检查关键目录
-Write-Log "Info" "4. 检查关键目录..."
+# 4. Check key directories
+Write-Log "Info" "4. Checking key directories..."
 $dirs = @("docs", "scripts", "tools")
 foreach ($dir in $dirs) {
     if (Test-Path "$RepoRoot\$dir") {
-        Write-Log "Pass" "$dir/ 存在"
+        Write-Log "Pass" "$dir/ exists"
     } else {
-        Write-Log "Fail" "$dir/ 目录缺失"
+        Write-Log "Fail" "$dir/ is missing"
     }
 }
 
-# 5. 检查 README
-Write-Log "Info" "5. 检查 README 文件..."
+# 5. Check README
+Write-Log "Info" "5. Checking README files..."
 $readmeFiles = Get-ChildItem -Path $RepoRoot -Filter "README*" -File -ErrorAction SilentlyContinue
 if ($readmeFiles) {
-    Write-Log "Pass" "找到 $($readmeFiles.Count) 个 README 文件"
+    Write-Log "Pass" "Found $($readmeFiles.Count) README file(s)"
 } else {
-    Write-Log "Warn" "未找到 README 文件"
+    Write-Log "Warn" "No README files found"
 }
 
-# 6. Markdown 检查
-Write-Log "Info" "6. Markdown 检查..."
+# 6. Markdown check
+Write-Log "Info" "6. Checking Markdown files..."
 $mdFiles = Get-ChildItem -Path $RepoRoot -Recurse -Filter "*.md" -ErrorAction SilentlyContinue | Where-Object { -not $_.PSIsContainer }
 $emptyMd = ($mdFiles | Where-Object { $_.Length -eq 0 }).Count
 if ($emptyMd -eq 0) {
-    Write-Log "Pass" "所有 Markdown 文件非空 (共 $($mdFiles.Count) 个)"
+    Write-Log "Pass" "All Markdown files are non-empty (total $($mdFiles.Count))"
 } else {
-    Write-Log "Warn" "$emptyMd 个空 Markdown 文件"
+    Write-Log "Warn" "$emptyMd empty Markdown file(s)"
 }
 
-# 7. PowerShell 语法检查
-Write-Log "Info" "7. 脚本语法检查..."
+# 7. PowerShell syntax check
+Write-Log "Info" "7. Checking script syntax..."
 $psFiles = Get-ChildItem -Path "$RepoRoot\tools" -Filter "*.ps1" -ErrorAction SilentlyContinue
 if ($psFiles) {
     $syntaxOk = $true
@@ -94,19 +94,19 @@ if ($psFiles) {
         try {
             $null = [System.Management.Automation.PSParser]::Tokenize((Get-Content $f.FullName -Raw), [ref]$null)
         } catch {
-            Write-Log "Fail" "脚本语法错误: $($f.Name)"
+            Write-Log "Fail" "Script syntax error: $($f.Name)"
             $syntaxOk = $false
         }
     }
     if ($syntaxOk) {
-        Write-Log "Pass" "所有 PowerShell 脚本语法正常"
+        Write-Log "Pass" "All PowerShell scripts parsed successfully"
     }
 } else {
-    Write-Log "Info" "无 PowerShell 脚本"
+    Write-Log "Info" "No PowerShell scripts found"
 }
 
-# 8. 仓库结构
-Write-Log "Info" "8. 仓库结构检查..."
+# 8. Repository structure
+Write-Log "Info" "8. Checking repository structure..."
 $requiredDirs = @("docs", "scripts", "tools")
 $missing = 0
 foreach ($d in $requiredDirs) {
@@ -115,25 +115,25 @@ foreach ($d in $requiredDirs) {
     }
 }
 if ($missing -eq 0) {
-    Write-Log "Pass" "仓库结构完整"
+    Write-Log "Pass" "Repository structure is complete"
 } else {
-    Write-Log "Fail" "缺少 $missing 个必需目录"
+    Write-Log "Fail" "Missing $missing required directorie(s)"
 }
 
-# 总结
+# Summary
 Write-Host ""
-Write-Host "=== 检查结果 ===" -ForegroundColor Cyan
-Write-Host "错误: $Errors"
-Write-Host "警告: $Warnings"
+Write-Host "=== Summary ===" -ForegroundColor Cyan
+Write-Host "Errors: $Errors"
+Write-Host "Warnings: $Warnings"
 Write-Host ""
 
 if ($Errors -gt 0) {
-    Write-Host "检查失败，请修复以上错误" -ForegroundColor Red
+    Write-Host "Check failed. Fix the errors above." -ForegroundColor Red
     exit 1
 } elseif ($Warnings -gt 0) {
-    Write-Host "检查通过但有警告" -ForegroundColor Yellow
+    Write-Host "Check passed with warnings." -ForegroundColor Yellow
     exit 0
 } else {
-    Write-Host "检查通过" -ForegroundColor Green
+    Write-Host "Check passed." -ForegroundColor Green
     exit 0
 }
