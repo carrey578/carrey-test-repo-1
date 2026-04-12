@@ -68,7 +68,7 @@ foreach ($dir in $dirs) {
 
 # 5. 检查 README
 Write-Log "Info" "5. 检查 README 文件..."
-$readmeFiles = Get-ChildItem -Path $RepoRoot -Filter "README*" -File -ErrorAction SilentlyContinue
+$readmeFiles = Get-ChildItem -Path "$RepoRoot" -Filter "README*" -File -ErrorAction SilentlyContinue
 if ($readmeFiles) {
     Write-Log "Pass" "找到 $($readmeFiles.Count) 个 README 文件"
 } else {
@@ -77,7 +77,7 @@ if ($readmeFiles) {
 
 # 6. Markdown 检查
 Write-Log "Info" "6. Markdown 检查..."
-$mdFiles = Get-ChildItem -Path $RepoRoot -Recurse -Filter "*.md" -ErrorAction SilentlyContinue | Where-Object { -not $_.PSIsContainer }
+$mdFiles = Get-ChildItem -Path "$RepoRoot" -Recurse -Filter "*.md" -ErrorAction SilentlyContinue | Where-Object { -not $_.PSIsContainer }
 $emptyMd = ($mdFiles | Where-Object { $_.Length -eq 0 }).Count
 if ($emptyMd -eq 0) {
     Write-Log "Pass" "所有 Markdown 文件非空 (共 $($mdFiles.Count) 个)"

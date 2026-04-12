@@ -90,6 +90,36 @@
 
 ---
 
+## 第四次记录 (2026-04-12)
+
+- **日期：** 2026-04-12
+- **任务名称：** 阶段4.1B修复轮-tools/preflight-check.ps1变量引号修复
+- **是否已获授权：** 是
+- **调用目标：** tools/preflight-check.ps1
+- **文件范围：** tools/preflight-check.ps1
+- **服务器执行位置：** /root/workspace/worktrees/lingxi-codex-bootstrap
+- **Codex 承担角色：** 手动 fallback（因 ACP runtime 不可用，改为主动修复）
+- **实际执行动作：**
+  1. 发起申请并获批
+  2. 尝试调用 Codex CLI（ACP runtime 不可用）
+  3. 手动分析 preflight-check.ps1 发现变量引用缺少引号问题
+  4. 修复2处变量引号问题（第71、80行）
+  5. 创建159修复报告文档
+- **产出文件：**
+  - tools/preflight-check.ps1（已修改）
+  - 159-lingxi-codex-preflight-parse-fix.md（已创建）
+  - 152-lingxi-codex-session-log.md（已更新）
+- **是否修改代码：** 是（仅变量引号修复）
+- **是否提交 commit：** 待提交
+- **是否 push：** 待 push
+- **是否已恢复默认路线：** 待执行
+- **人工验收结果：** 待验收
+- **后续建议：** 本轮已结束
+
+**本轮已结束**
+
+---
+
 ## 模板
 
 - 日期：
