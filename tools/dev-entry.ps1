@@ -1,4 +1,4 @@
-# dev-entry.ps1 - 统一任务入口脚本（Windows 端）
+﻿# dev-entry.ps1 - 统一任务入口脚本（Windows 端）
 # 用法: .\dev-entry.ps1 [-Verbose] [-Quiet] [command]
 
 param(
@@ -133,14 +133,15 @@ function Cmd-Handoff {
     Write-Color "Blue" "=== Handoff 生成入口 ==="
     Write-Host ""
     Write-Host "当前可用 handoff 模板:"
-    
+
     $handoffFiles = Get-ChildItem -Path "$RepoRoot\docs\collab\chatgpt-lingxi" -Filter "*handoff*.md" -ErrorAction SilentlyContinue
     if ($handoffFiles) {
         $handoffFiles | ForEach-Object { Write-Host "  - $($_.Name)" }
-    } else {
+    }
+    else {
         Write-Host "  (无)"
     }
-    
+
     Write-Host ""
     Write-Host "建议使用 handoff-template-v1.md 作为模板"
     Write-Host "复制命令示例:"
@@ -152,27 +153,28 @@ function Cmd-Reports {
     Write-Color "Blue" "=== 报告目录检查 ==="
     Write-Host ""
     Write-Host "报告目录结构:"
-    
+
     $dirs = @(
-        "docs=collab\chatgpt-lingxi",
+        "docs\collab\chatgpt-lingxi",
         "shared-for-ai\outputs"
     )
-    
+
     foreach ($dir in $dirs) {
         $path = "$RepoRoot\$dir"
         if (Test-Path $path) {
             $count = (Get-ChildItem -Path $path -Filter "*.md" -ErrorAction SilentlyContinue).Count
-            Write-Host "  $dir`: $count 个文档"
-        } else {
-            Write-Host "  $dir`: (不存在)"
+            Write-Host "  ${dir}: $count 个文档"
+        }
+        else {
+            Write-Host "  ${dir}: (不存在)"
         }
     }
-    
+
     Write-Host ""
     Write-Host "最近报告 (7天内):"
-    Get-ChildItem -Path "$RepoRoot\docs\collab\chatgpt-lingxi" -Filter "*.md" -ErrorAction SilentlyContinue | 
-        Where-Object { $_.LastWriteTime -gt (Get-Date).AddDays(-7) } | 
-        Select-Object -First 5 | 
+    Get-ChildItem -Path "$RepoRoot\docs\collab\chatgpt-lingxi" -Filter "*.md" -ErrorAction SilentlyContinue |
+        Where-Object { $_.LastWriteTime -gt (Get-Date).AddDays(-7) } |
+        Select-Object -First 5 |
         ForEach-Object { Write-Host "  - $($_.Name)" }
 }
 
@@ -180,14 +182,24 @@ function Cmd-All {
     Log-Verbose "运行所有检查..."
     Write-Color "Blue" "=== 运行所有检查 ==="
     Write-Host ""
-    if (-not $Quiet) { Write-Host "步骤 1/3: 开发环境检查" -ForegroundColor Yellow }
+
+    if (-not $Quiet) {
+        Write-Host "步骤 1/3: 开发环境检查" -ForegroundColor Yellow
+    }
     & "$ScriptDir\check-dev-env-local.ps1"
+
     Write-Host ""
-    if (-not $Quiet) { Write-Host "步骤 2/3: 预提交检查" -ForegroundColor Yellow }
+    if (-not $Quiet) {
+        Write-Host "步骤 2/3: 预提交检查" -ForegroundColor Yellow
+    }
     & "$ScriptDir\preflight-check.ps1"
+
     Write-Host ""
-    if (-not $Quiet) { Write-Host "步骤 3/3: 仓库状态" -ForegroundColor Yellow }
+    if (-not $Quiet) {
+        Write-Host "步骤 3/3: 仓库状态" -ForegroundColor Yellow
+    }
     Cmd-Status
+
     Write-Host ""
     Log-Success "所有检查完成"
 }
