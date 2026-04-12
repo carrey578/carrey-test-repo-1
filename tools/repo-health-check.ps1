@@ -1,4 +1,4 @@
-<#
+﻿<#
 .SYNOPSIS
     Repo Health Check Wrapper - 一键检查开发环境状态
 
