@@ -59,7 +59,7 @@ if (-not $status) {
 Write-Log "Info" "4. 检查关键目录..."
 $dirs = @("docs", "scripts", "tools")
 foreach ($dir in $dirs) {
-    if (Test-Path "$RepoRoot\$dir") {
+    if (Test-Path "$RepoRoot/$dir") {
         Write-Log "Pass" "$dir/ 存在"
     } else {
         Write-Log "Fail" "$dir/ 目录缺失"
@@ -87,7 +87,7 @@ if ($emptyMd -eq 0) {
 
 # 7. PowerShell 语法检查
 Write-Log "Info" "7. 脚本语法检查..."
-$psFiles = Get-ChildItem -Path "$RepoRoot\tools" -Filter "*.ps1" -ErrorAction SilentlyContinue
+$psFiles = Get-ChildItem -Path "$RepoRoot/tools" -Filter "*.ps1" -ErrorAction SilentlyContinue
 if ($psFiles) {
     $syntaxOk = $true
     foreach ($f in $psFiles) {
@@ -110,7 +110,7 @@ Write-Log "Info" "8. 仓库结构检查..."
 $requiredDirs = @("docs", "scripts", "tools")
 $missing = 0
 foreach ($d in $requiredDirs) {
-    if (-not (Test-Path "$RepoRoot\$d")) {
+    if (-not (Test-Path "$RepoRoot/$d")) {
         $missing++
     }
 }
