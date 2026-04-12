@@ -1,4 +1,4 @@
-# verify-dev-entry.ps1 - dev-entry.ps1 功能验证脚本 (Windows 端)
+﻿# verify-dev-entry.ps1 - dev-entry.ps1 功能验证脚本 (Windows 端)
 # 用法: .\verify-dev-entry.ps1
 
 $ErrorActionPreference = "Continue"
