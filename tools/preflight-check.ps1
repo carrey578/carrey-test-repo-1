@@ -1,4 +1,4 @@
-# preflight-check.ps1 - 预提交检查脚本 (Windows 端)
+﻿# preflight-check.ps1 - 预提交检查脚本 (Windows 端)
 # 用法: .\preflight-check.ps1 [-Strict]
 
 $ErrorActionPreference = "Continue"
@@ -25,22 +25,27 @@ Write-Log "Info" "1. 检查 Git 仓库..."
 try {
     $gitCheck = git rev-parse --git-dir 2>$null
     Write-Log "Pass" "Git 仓库正常"
-} catch {
+}
+catch {
     Write-Log "Fail" "不是 Git 仓库"
 }
 
 # 2. 检查分支
 Write-Log "Info" "2. 检查当前分支..."
 $branch = git branch --show-current 2>$null
+
 if ($branch -eq "chore/cursor-bootstrap") {
     Write-Log "Pass" "当前分支: $branch"
-} elseif ($branch -eq "main") {
+}
+elseif ($branch -eq "main") {
     if ($Strict) {
         Write-Log "Fail" "不应直接提交到 main"
-    } else {
+    }
+    else {
         Write-Log "Warn" "当前在 main 分支，建议在 feature 分支开发"
     }
-} else {
+}
+else {
     Write-Log "Warn" "当前分支: $branch"
 }
 
@@ -130,10 +135,12 @@ Write-Host ""
 if ($Errors -gt 0) {
     Write-Host "检查失败，请修复以上错误" -ForegroundColor Red
     exit 1
-} elseif ($Warnings -gt 0) {
+}
+elseif ($Warnings -gt 0) {
     Write-Host "检查通过但有警告" -ForegroundColor Yellow
     exit 0
-} else {
+}
+else {
     Write-Host "检查通过" -ForegroundColor Green
     exit 0
 }
