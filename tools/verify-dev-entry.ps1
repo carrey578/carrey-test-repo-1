@@ -29,31 +29,31 @@ Write-Host ""
 
 # 测试 1: help 命令显示新命令
 Test-Case "help 命令包含 'all' 命令" {
-    $output = & "$RepoRoot\tools\dev-entry.ps1" help 2>$null
+    $output = & "$RepoRoot/tools/dev-entry.ps1" help 2>$null
     $output -match "all.*运行所有检查"
 }
 
 # 测试 2: help 命令显示 'preflight'
 Test-Case "help 命令包含 'preflight' 命令" {
-    $output = & "$RepoRoot\tools\dev-entry.ps1" help 2>$null
+    $output = & "$RepoRoot/tools/dev-entry.ps1" help 2>$null
     $output -match "preflight"
 }
 
 # 测试 3: help 命令显示 'report'
 Test-Case "help 命令包含 'report' 命令" {
-    $output = & "$RepoRoot\tools\dev-entry.ps1" help 2>$null
+    $output = & "$RepoRoot/tools/dev-entry.ps1" help 2>$null
     $output -match "report.*生成变更报告"
 }
 
 # 测试 4: status 命令仍正常工作
 Test-Case "status 命令兼容" {
-    $output = & "$RepoRoot\tools\dev-entry.ps1" status 2>$null
+    $output = & "$RepoRoot/tools/dev-entry.ps1" status 2>$null
     $output -match "分支:"
 }
 
 # 测试 5: check 命令仍正常工作
 Test-Case "check 命令兼容" {
-    $output = & "$RepoRoot\tools\dev-entry.ps1" check 2>$null
+    $output = & "$RepoRoot/tools/dev-entry.ps1" check 2>$null
     $output -match "开发环境检查|Check"
 }
 
