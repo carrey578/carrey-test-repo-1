@@ -150,6 +150,39 @@
 
 ---
 
+## 第六次记录 (2026-04-13)
+
+- **日期：** 2026-04-13
+- **任务名称：** 阶段5 - 固定本地验收动作，形成最小闭环
+- **是否已获授权：** 不适用
+- **调用目标：** 不适用
+- **文件范围：** docs/collab/chatgpt-lingxi/
+- **服务器执行位置：** /root/workspace/worktrees/lingxi-codex-bootstrap
+- **Codex 承担角色：** 不调用（本轮为文档固化轮）
+- **实际执行动作：**
+  1. 创建 162-lingxi-codex-local-acceptance-checklist.md
+     - 固化每轮本地验收动作的标准命令顺序
+     - 包含 git fetch/pull/status/log、dev-entry.ps1 help、verify-dev-entry.ps1、repo-health-check.ps1
+  2. 创建 163-lingxi-codex-stage5-workflow.md
+     - 固化阶段5的最小工作流
+     - 明确本轮不调用 Codex
+     - 明确验收顺序和验收标准
+  3. 更新 152-lingxi-codex-session-log.md
+- **产出文件：**
+  - 162-lingxi-codex-local-acceptance-checklist.md（新建）
+  - 163-lingxi-codex-stage5-workflow.md（新建）
+  - 152-lingxi-codex-session-log.md（已更新）
+- **是否修改代码：** 否
+- **是否提交 commit：** 待提交（本轮产出）
+- **是否 push：** 待 push
+- **是否已恢复默认路线：** 不适用
+- **人工验收结果：** 待本地验收（按 162 清单执行）
+- **后续建议：** 本轮已结束，形成阶段5最小闭环
+
+**本轮已结束**
+
+---
+
 ## 模板
 
 - 日期：
