@@ -3,7 +3,7 @@
 > **阶段：** 阶段5 - 固定本地验收动作，形成最小闭环
 > **分支：** work/lingxi-codex-bootstrap
 > **执行位置：** /root/workspace/worktrees/lingxi-codex-bootstrap
-> **本轮定位：** 文档固化轮，**不调用 Codex**
+> **本轮定位：** 文档固化收口轮，**不调用 Codex**
 
 ---
 
@@ -12,6 +12,52 @@
 - 固化本地验收动作的标准流程
 - 明确验收顺序和验收标准
 - 形成"申请 → 修复 → 验收 → push"的最小闭环
+
+---
+
+## 阶段5定位说明
+
+### 为什么本轮不调用 Codex？
+
+阶段5是**文档固化收口轮**，其核心职责是：
+
+1. **整理验收规范**：将已验证的本地验收动作固化为标准流程
+2. **不涉及代码修改**：本轮不改任何 tools/ 脚本
+3. **纯文档工作**：仅整理验收清单和工作流说明
+4. **明确验收标准**：让后续执行有据可依
+
+> Codex 的定位是**代码修复**角色，阶段5不涉及代码层面工作，因此不调用 Codex。
+
+---
+
+## 本地验收动作顺序
+
+| 步骤 | 命令 | 说明 |
+|------|------|------|
+| 1 | `git fetch origin` | 获取远程最新变更 |
+| 2 | `git pull --ff-only origin work/lingxi-codex-bootstrap` | 快进拉取，确保同步 |
+| 3 | `git branch --show-current` | 确认当前分支正确 |
+| 4 | `git status` | 检查工作区状态 |
+| 5 | `git log --oneline -8` | 查看最近8条提交 |
+| 6 | `.\tools\dev-entry.ps1 help` | 验证 dev-entry 可运行 |
+| 7 | `.\tools\verify-dev-entry.ps1` | 验证开发环境入口 |
+| 8 | `.\tools\repo-health-check.ps1` | 执行仓库健康检查 |
+| 9 | `git diff HEAD~1 HEAD` | 查看本轮变更差异 |
+
+---
+
+## 什么情况下算通过？
+
+### 验收通过条件（全部满足）
+
+| 条件 | 说明 |
+|------|------|
+| ✅ 分支正确 | 当前分支为 `work/lingxi-codex-bootstrap` |
+| ✅ 远程同步 | `git pull --ff-only` 成功，无冲突 |
+| ✅ 工作区清洁 | `git status` 显示 working tree clean |
+| ✅ 提交存在 | `git log` 显示本轮 commit |
+| ✅ 脚本可运行 | dev-entry.ps1 / verify-dev-entry.ps1 / repo-health-check.ps1 均无报错 |
+| ✅ 变更预期 | `git diff` 显示本轮预期的文件变更 |
 
 ---
 
@@ -24,19 +70,13 @@
                           │
                           ▼
 ┌─────────────────────────────────────────────────────────┐
-│  1. 本地验收检查（按顺序执行）                            │
-│     - git branch --show-current                         │
-│     - git fetch origin                                  │
-│     - git status                                        │
-│     - .\tools\dev-entry.ps1 help                        │
-│     - .\tools\verify-dev-entry.ps1                      │
-│     - .\tools\repo-health-check.ps1                      │
+│  1. 本地验收检查（按顺序执行162文档中的9个步骤）          │
 └─────────────────────────────────────────────────────────┘
                           │
                           ▼
 ┌─────────────────────────────────────────────────────────┐
 │  2. 验收结果判断                                         │
-│     ✅ 全部通过 → 执行 commit & push                     │
+│     ✅ 全部8项通过 → 执行 commit & push                   │
 │     ❌ 有失败 → 定位问题 → 返回对应阶段修复               │
 └─────────────────────────────────────────────────────────┘
                           │
@@ -75,7 +115,7 @@
 ### ✅ 必须做的事情
 
 1. **本地验收优先**：每轮修复后必须先本地验收
-2. **按顺序执行验收命令**：遵循 162 文档的标准顺序
+2. **按顺序执行验收命令**：遵循 162 文档的标准顺序（9个步骤）
 3. **验收通过后再 push**：确保本地验证无问题
 4. **更新 session log**：记录本轮执行情况
 
@@ -87,16 +127,27 @@
 
 ---
 
+## 当前工具状态
+
+| 脚本 | 状态 |
+|------|------|
+| repo-health-check.ps1 | ✅ 已可运行 |
+| preflight-check.ps1 | ✅ 已可运行 |
+| verify-dev-entry.ps1 | ✅ 已可运行 |
+| dev-entry.ps1 | ✅ 已可运行 |
+
+---
+
 ## 本轮执行记录
 
 - **执行日期：** 2026-04-13
-- **任务名称：** 阶段5 - 固定本地验收动作
-- **任务性质：** 文档固化轮
-- **是否调用 Codex：** 否（本轮明确不调用）
+- **任务名称：** 阶段5 - 文档固化收口轮
+- **任务性质：** 文档固化收口轮
+- **是否调用 Codex：** 否（明确不调用）
 - **产出文件：**
-  - 162-lingxi-codex-local-acceptance-checklist.md（新建）
-  - 163-lingxi-codex-stage5-workflow.md（新建）
+  - 162-lingxi-codex-local-acceptance-checklist.md（更新）
+  - 163-lingxi-codex-stage5-workflow.md（更新）
   - 152-lingxi-codex-session-log.md（更新）
-- **后续建议：** 验收通过后，阶段5闭环形成，可进入后续阶段
+- **后续建议：** 阶段5闭环已形成
 
 **本轮已结束**
