@@ -229,7 +229,7 @@
 - **Codex 承担角色：** 不调用（本轮为评估与决策轮）
 - **实际执行动作：**
   1. 创建 157-lingxi-codex-trial-evaluation.md
-     - 试点评估结论：部分通过
+     - 试点评估结论：通过（但不建议立即扩大范围）
      - 评估依据：脚本链路、文档体系、协作模式
      - 当前试点链路验证程度
      - 回退动作（4种场景）
@@ -240,8 +240,8 @@
      - 下一步维持的边界
   3. 更新 152-lingxi-codex-session-log.md
 - **产出文件：**
-  - 157-lingxi-codex-trial-evaluation.md（新建）
-  - 165-lingxi-codex-stage6-next-step-decision.md（新建）
+  - 157-lingxi-codex-trial-evaluation.md（已更新）
+  - 165-lingxi-codex-stage6-next-step-decision.md（已更新）
   - 152-lingxi-codex-session-log.md（已更新）
 - **是否修改代码：** 否
 - **是否提交 commit：** 待提交
