@@ -218,6 +218,42 @@
 
 ---
 
+## 第八次记录 (2026-04-13)
+
+- **日期：** 2026-04-13
+- **任务名称：** 阶段6 - 试点评估、回退规则固化、下一步决策
+- **是否已获授权：** 不适用（本轮不调用 Codex）
+- **调用目标：** 不适用
+- **文件范围：** docs/collab/chatgpt-lingxi/
+- **服务器执行位置：** /root/workspace/worktrees/lingxi-codex-bootstrap
+- **Codex 承担角色：** 不调用（本轮为评估与决策轮）
+- **实际执行动作：**
+  1. 创建 157-lingxi-codex-trial-evaluation.md
+     - 试点评估结论：部分通过
+     - 评估依据：脚本链路、文档体系、协作模式
+     - 当前试点链路验证程度
+     - 回退动作（4种场景）
+  2. 创建 165-lingxi-codex-stage6-next-step-decision.md
+     - 决策结论：现在该做 / 暂时不要做
+     - 是否建议扩大范围：暂不建议
+     - 如果继续试点建议的任务类型
+     - 下一步维持的边界
+  3. 更新 152-lingxi-codex-session-log.md
+- **产出文件：**
+  - 157-lingxi-codex-trial-evaluation.md（新建）
+  - 165-lingxi-codex-stage6-next-step-decision.md（新建）
+  - 152-lingxi-codex-session-log.md（已更新）
+- **是否修改代码：** 否
+- **是否提交 commit：** 待提交
+- **是否 push：** 待 push
+- **是否已恢复默认路线：** 不适用
+- **人工验收结果：** 待验收
+- **后续建议：** 待验证 Codex 真实调用后再评估扩大，本轮已结束
+
+**本轮已结束**
+
+---
+
 ## 模板
 
 - 日期：
