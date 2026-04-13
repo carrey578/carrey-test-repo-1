@@ -9,7 +9,7 @@
 
 ## 评估结论
 
-### 🎯 总体评估：**部分通过**
+### 🎯 总体评估：**通过（但不建议立即扩大范围）**
 
 ---
 
@@ -59,6 +59,25 @@
 
 ---
 
+## Codex 验证状态区分
+
+### 已验证 ✅
+
+| 验证项 | 状态 | 说明 |
+|--------|------|------|
+| Codex 真实只读调用 | ✅ 已验证 | 2026-04-10 完成（155 文档记录） |
+| Git 工作流 | ✅ 已验证 | fetch → pull → commit → push 全链路 |
+| 脚本执行 | ✅ 已验证 | 4个脚本均可运行 |
+| 文档体系 | ✅ 已验证 | 阶段0-5 完整文档链 |
+
+### 待形成稳定案例 ⚠️
+
+| 验证项 | 状态 | 说明 |
+|--------|------|------|
+| Codex 真实写入型调用 | ⚠️ 待验证 | 尚未形成稳定的成功案例 |
+
+---
+
 ## 当前试点链路验证程度
 
 ### 已验证 ✅
@@ -67,58 +86,56 @@
 2. **脚本执行**：dev-entry.ps1 / verify-dev-entry.ps1 / repo-health-check.ps1 均可运行
 3. **文档体系**：从阶段0到阶段5的完整文档链
 4. **验收标准**：9步骤验收命令已固化
+5. **Codex 只读调用**：已成功执行（2026-04-10）
 
 ### 待验证 ⚠️
 
-1. **Codex 真实调用**：因 ACP runtime 不可用，尚未真正执行 Codex 修复
+1. **Codex 写入型调用**：尚未形成稳定的成功案例
 2. **大规模代码修改**：仅做了最小修补（提示文案、路径分隔符）
 3. **多文件协同修改**：单文件修改场景已验证，复杂场景待测
 
 ---
 
-## 回退动作
+## 回退动作（保守写法）
 
 ### 场景1：脚本执行失败
 
 **回退动作**：
 ```powershell
-# 切回上一个稳定 commit
+# 切回远程稳定版本
 cd /root/workspace/worktrees/lingxi-codex-bootstrap
-git reset --hard HEAD~1
-git push --force origin work/lingxi-codex-bootstrap
+git fetch origin
+git reset --hard origin/work/lingxi-codex-bootstrap
 ```
 
 ### 场景2：验收不通过
 
 **回退动作**：
 ```powershell
-# 撤销未提交的更改
+# 撤销本轮未提交的更改
 cd /root/workspace/worktrees/lingxi-codex-bootstrap
-git checkout -- .
-git stash drop
+git restore .
+git clean -fd
 ```
 
-### 场景3：Codex 调用失控
+### 场景3：Codex 调用出现问题
 
 **回退动作**：
 ```powershell
-# 立即中断 Codex 进程
-# 撤销所有未 push 的更改
+# 恢复到调用前的状态
 cd /root/workspace/worktrees/lingxi-codex-bootstrap
 git fetch origin
 git reset --hard origin/work/lingxi-codex-bootstrap
 ```
 
-### 场景4：试点失败，全面回退
+### 场景4：试点需要暂停
 
 **回退动作**：
 ```powershell
-# 删除试点 worktree
-cd /root/workspace/worktrees
-rm -rf lingxi-codex-bootstrap
-
-# 通知相关方
-# 恢复默认协作模式
+# 暂停试点，回到原有协作模式
+# 1. 不再向试点分支 push 新内容
+# 2. 回到 ChatGPT 出方案 + 本地手改 + 灵犀只做文档/巡检
+# 3. 通知相关方试点暂停
 ```
 
 ---
@@ -131,12 +148,14 @@ rm -rf lingxi-codex-bootstrap
 | 文档体系 | ✅ 完成 | 10+ 文档已固化 |
 | 脚本链路 | ✅ 完成 | 4个脚本可运行 |
 | 验收标准 | ✅ 完成 | 9步骤验收清单 |
-| Codex 调用 | ⚠️ 待验证 | 需真实调用验证 |
+| Codex 只读调用 | ✅ 已验证 | 2026-04-10 成功 |
+| Codex 写入型调用 | ⚠️ 待形成稳定案例 | 待验证 |
 
 ---
 
 ## 后续建议
 
-1. **扩大试点前**：建议先在真实场景中验证 Codex 调用（阶段4）
-2. **当前边界**：保持 work/lingxi-codex-bootstrap 试点范围
-3. **回退机制**：已建立，详见上述回退动作
+1. **当前状态**：通过，但不建议立即扩大范围
+2. **原因**：Codex 写入型调用尚未形成稳定成功案例
+3. **边界**：保持 work/lingxi-codex-bootstrap 试点范围
+4. **回退机制**：已建立，详见上述保守回退动作
