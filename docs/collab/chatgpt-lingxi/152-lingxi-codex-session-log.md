@@ -282,6 +282,37 @@
 
 ---
 
+## 第十次记录 (2026-04-18)
+
+- **日期：** 2026-04-18
+- **任务名称：** 阶段7.4 - tools/preflight-check.ps1 单文件文案小修补复验
+- **是否已获授权：** 是
+- **调用目标：** tools/preflight-check.ps1
+- **文件范围：** tools/preflight-check.ps1
+- **服务器执行位置：** 本地 Windows 工作目录（D:\dev\carrey-test-repo-1）
+- **Codex 承担角色：** 本地最小写入（第二次单文件复验）
+- **实际执行动作：**
+  1. 先补齐并入仓 166 / 167 阶段文档，使阶段 7.4 从 clean workspace 起步
+  2. 按阶段 7.4 playbook 选定唯一目标文件 `tools/preflight-check.ps1`
+  3. 通过本地 Windows Codex 执行一次单文件、低风险、文案级受限写入
+  4. 将工作区状态输出中的“未暂存”调整为“未跟踪”，使文案与 `??` 计数语义一致
+  5. 确认未修改参数、函数名、退出码、路径逻辑、判断逻辑和调用链
+  6. 运行 `verify-dev-entry.ps1` 与 `repo-health-check.ps1`，本地验收全部通过
+  7. 形成代码提交 `b3e7b66 chore: clarify preflight check wording`
+- **产出文件：**
+  - tools/preflight-check.ps1（已修改）
+  - 152-lingxi-codex-session-log.md（已更新）
+- **是否修改代码：** 是（仅用户可见输出文案）
+- **是否提交 commit：** 是（`b3e7b66 chore: clarify preflight check wording`）
+- **是否 push：** 是（本轮提交已推送）
+- **是否已恢复默认路线：** 是
+- **人工验收结果：** 通过
+- **后续建议：** 阶段 7.4 已完成，后续可考虑进入阶段 7.5 的单文件文档类写入再验证
+
+**本轮已结束**
+
+---
+
 ## 模板
 
 - 日期：
