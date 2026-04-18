@@ -48,7 +48,7 @@ function Show-Help {
     Write-Host "  check      - 运行开发环境检查"
     Write-Host "  status     - 显示仓库状态摘要"
     Write-Host "  docs       - 查看文档索引"
-    Write-Host "  handoff    - 生成 handoff 入口"
+    Write-Host "  handoff    - 查看 handoff 模板与复制示例"
     Write-Host "  reports    - 检查报告目录"
     Write-Host "  all        - 运行所有检查 (check+preflight+status)"
     Write-Host "  preflight  - 运行预提交检查"
@@ -129,8 +129,8 @@ function Cmd-Docs {
 }
 
 function Cmd-Handoff {
-    Log-Verbose "生成 handoff 入口..."
-    Write-Color "Blue" "=== Handoff 生成入口 ==="
+    Log-Verbose "查看 handoff 模板入口..."
+    Write-Color "Blue" "=== Handoff 模板入口 ==="
     Write-Host ""
     Write-Host "当前可用 handoff 模板:"
 
