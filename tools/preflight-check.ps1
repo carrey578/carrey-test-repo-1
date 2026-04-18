@@ -57,7 +57,7 @@ if (-not $status) {
 } else {
     $untracked = ($status -split "`n" | Where-Object { $_ -match "^\?\?" }).Count
     $modified = ($status -split "`n" | Where-Object { $_ -match "^( M|M )" }).Count
-    Write-Log "Info" "未暂存: $untracked, 已修改: $modified"
+    Write-Log "Info" "未跟踪: $untracked, 已修改: $modified"
 }
 
 # 4. 检查关键目录
