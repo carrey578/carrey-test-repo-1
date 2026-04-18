@@ -29,6 +29,7 @@ if ($Help) {
 }
 
 $ErrorActionPreference = "Continue"
+$PowerShellExe = Join-Path $env:WINDIR "System32\WindowsPowerShell\v1.0\powershell.exe"
 
 Write-Host "======================================" -ForegroundColor Cyan
 Write-Host "  Repo Health Check  开始检查..." -ForegroundColor Cyan
@@ -58,8 +59,9 @@ function Invoke-CheckScript {
         return
     }
 
-    & $Path
-    $exitCode = if ($null -ne $LASTEXITCODE) { $LASTEXITCODE } else { 0 }
+    # Use a child PowerShell process so wrapper exit codes stay reliable.
+    & $PowerShellExe -NoProfile -ExecutionPolicy Bypass -File $Path
+    $exitCode = if ($null -ne $LASTEXITCODE) { [int]$LASTEXITCODE } else { 0 }
 
     $script:scriptResults += [pscustomobject]@{
         Name = $Name
