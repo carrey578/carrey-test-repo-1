@@ -337,3 +337,66 @@
   - `Hermes 最小可用`：已达到
   - `Hermes 正式接管`：已达到
   - `OpenClaw 原地切 Hermes 切换完成`：可以成立
+
+---
+
+## 16. 后续控制台动作补充（应用模板切换后）
+
+### 16.1 额外动作
+
+- 在上述结论形成后，人工又执行了额外控制台动作：
+  - 为当前云机制作快照 / 镜像留存
+  - 在腾讯云控制台直接选择并运行 `使用应用模板 - Hermes Agent`
+
+### 16.2 运行态变化
+
+- 当前实例运行态因此发生切换：
+  - 系统回到 `Ubuntu 24.04.4 LTS / kernel 6.8.0-101-generic`
+  - `/root/.openclaw` 不再存在
+  - 当前活跃 Hermes 不再运行于 `root`，而是运行于 `ubuntu` 用户环境
+  - 当前可执行文件位于 `/home/ubuntu/.local/bin/hermes`
+  - 当前 gateway 为 `ubuntu` 用户级 `systemd --user` 服务：`hermes-gateway.service`
+
+### 16.3 平台侧验证结果（应用模板环境）
+
+- 平台侧主运行位已重新验证：
+  - 飞书新应用 `灵犀-Hermes-Tencent` 可正常收发消息
+  - 对话中可收到 Hermes 自我介绍与状态回复
+  - 首条 `No home channel is set for Feishu` 仅为提示，不构成故障
+  - 如需将该会话设为默认回传通道，可在飞书中发送 `/sethome`
+
+- 当前 gateway 连接形态：
+  - `hermes-gateway.service` 处于 `active (running)`
+  - 日志可见已成功连接 Feishu / Lark websocket
+  - 运行级命令探针 `hermes chat -Q -q 'Reply with exactly: ok'` 返回 `ok`
+  - 人工在飞书中执行 `/sethome` 后已收到成功反馈，当前对话已设为该平台的 home channel
+
+### 16.4 结论更新
+
+- 旧的 `root + Telegram` 接管态应视为**历史阶段性状态**
+- 当前现网主入口应更新为：
+  - `ubuntu 用户下的 Hermes 应用模板运行态`
+  - `平台侧主入口：飞书 / Lark`
+
+- 因此，最新真实结论为：
+  - `Hermes 最小可用`：已达到
+  - `Hermes 正式接管`：已达到
+  - `当前主入口`：`Hermes（应用模板环境，Feishu/Lark 已验证）`
+
+### 16.5 Key 清理收口
+
+- 已完成云机侧旧 key 留痕清理：
+  - 删除 `/home/ubuntu/.hermes/config.yaml.bak-*`
+  - 删除 `/home/ubuntu/.hermes/.env.bak-*`
+  - 删除 `/root/.hermes/config.yaml.bak-*`
+  - 删除 `/root/.hermes/.env.bak-*`
+  - 清理 `root` 与 `ubuntu` 的 `.bash_history`
+
+- 复核结果：
+  - 备份残留查询为空，未再发现 `config.yaml.bak-*` / `.env.bak-*` / `*.backup*`
+  - `hermes-gateway.service` 仍为 `active`
+  - 运行级命令探针 `hermes chat -Q -q 'Reply with exactly: ok'` 继续返回 `ok`
+
+- 判断：
+  - 旧 key 备份文件已清理完成
+  - 清理动作未影响当前 Hermes 的飞书主入口与运行状态
