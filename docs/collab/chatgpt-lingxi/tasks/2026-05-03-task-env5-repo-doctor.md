@@ -63,7 +63,7 @@
 - 不允许直接 push 到 main
 
 ## 13. 完成状态
-- [x] pending
+- [ ] pending
 - [ ] running
-- [ ] done
+- [x] done
 - [ ] blocked
