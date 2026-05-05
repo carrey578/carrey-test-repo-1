@@ -44,6 +44,26 @@
 
 ---
 
+## COS Directory Structure
+
+Based on the "多Agent配置-近期阶段指南2.0" document, the following structure has been established:
+
+```
+env5/hermes/{reports,logs,snapshots}
+env5/codex/{change-summaries,test-logs,build-artifacts}
+env5/repo/{snapshots,exports}
+env5/xfer/{incoming-backup,outgoing-backup}
+```
+
+### Current COS Contents
+
+| Object | Size | Last Modified |
+|--------|------|----------------|
+| env5/README.md | 306 | 2026-05-05 18:00:55 |
+| env5/hermes/smoke-tests/hermes-cos-smoke-test.txt | 257 | 2026-05-05 17:49:18 |
+
+---
+
 ## Next Steps
 
 - Use COS for env5 artifact storage (reports, logs, snapshots)
