@@ -6,11 +6,12 @@
 
 - **app/main.py**: Minimal FastAPI application with `/health` endpoint
   - Returns `{"status": "ok", "env": "dev"}` on GET request to `/health`
-  - Includes uvicorn server startup for local development
+  - Exposes `app` for local development with `uvicorn app.main:app`
 
 - **tests/test_health.py**: Test suite for health endpoint
-  - `test_health_endpoint`: Verifies correct status code and response body
-  - `test_health_response_format`: Validates JSON response format
+  - `test_health_endpoint_returns_ok`: Verifies correct status code and response body
+  - `test_health_endpoint_response_format`: Validates JSON response format
+  - `test_health_endpoint_content_type_is_json`: Verifies JSON content type
 
 - **README.md**: Running instructions and documentation
   - Installation steps for dependencies
@@ -22,7 +23,7 @@
 
 - Python 3.11+ required
 - Dependencies: fastapi, uvicorn, pytest, httpx
-- Server runs on `0.0.0.0:8000` by default
+- Server can be run with `uvicorn app.main:app --host 0.0.0.0 --port 8000`
 
 ### Notes
 
